@@ -1,0 +1,17 @@
+Configuração do Mail Guardian v5
+Banco de dados e logs
+
+STATE_DB="/var/lib/mail-guardian/state.db"
+LOG_FILE="/var/log/mail-guardian/guardian.log"
+MAIL_LOG="/var/log/mail.log"
+Políticas de segurança
+
+MAX_EMAILS=50 # Máximo de emails por usuário (threshold)
+BLOCK_TIME=86400 # Tempo de bloqueio em segundos (24h = 86400)
+AbuseIPDB Integration
+
+REPORT_ABUSE=0 # 0 = desligado, 1 = ligado
+ABUSEIPDB_KEY="" # Sua API key: https://www.abuseipdb.com/account/api
+Whitelist (nunca bloquear)
+
+WHITELIST="127.0.0.1 ::1 192.168.0.0/16 10.0.0.0/8 172.16.0.0/12"

@@ -1,0 +1,30 @@
+# Pacotes
+*.deb
+*.ddeb
+*.buildinfo
+*.changes
+pkg_build/
+
+# Logs
+*.log
+*.log.*
+
+# Banco de dados
+*.db
+*.db-journal
+
+# Arquivos temporários
+*.swp
+*.swo
+*~
+.DS_Store
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Testes
+test_results/
+coverage/
