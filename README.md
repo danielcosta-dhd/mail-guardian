@@ -10,6 +10,8 @@ Monitora logs em tempo real, detecta comportamentos maliciosos e bloqueia IPs au
 
 ## ✨ Features
 
+📖 Leia o [Whitepaper](WHITEPAPER.md) para detalhes técnicos e históricos.
+
 - 🚀 **Real-time monitoring** - Tail de logs com detecção instantânea
 - 🔒 **Automatic blocking** - Bloqueio via ipset com timeout configurável
 - 📊 **SQLite database** - Estatísticas persistentes de usuários e bloqueios
@@ -95,6 +97,7 @@ Daniel Costa
     GitHub: @danielcosta-dhd
 
     Email: danvesppadoli@gmail.com
+📖 Conheça a [história do projeto](STORY.md).
 
 🌟 Agradecimentos
 
