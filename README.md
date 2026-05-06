@@ -29,7 +29,6 @@ Monitora logs em tempo real, detecta comportamentos maliciosos e bloqueia IPs au
 
 ## 📋 Requisitos
 
-- Debian/Ubuntu (ou derivados)
 - Postfix ou Dovecot configurado
 - Bash 5.0+
 - Dependências: `sqlite3`, `ipset`, `curl`, `iptables`, `gawk`
