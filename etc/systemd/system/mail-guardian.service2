@@ -1,0 +1,13 @@
+[Unit]
+Description=Mail Guardian Engine
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/mail-guardian/run.sh
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,43 +1,25 @@
-.PHONY: build install clean test deb help
+# Makefile para Mail Guardian
 
-VERSION ?= 5.0
-PKG_NAME = mail-guardian
-
-help:
-@echo "Comandos disponíveis:"
-@echo " make build - Criar estrutura de build"
-@echo " make deb - Construir pacote .deb"
-@echo " make install - Instalar localmente"
-@echo " make test - Executar testes"
-@echo " make clean - Limpar arquivos temporários"
-
-build:
-@echo "[+] Preparando build..."
-@chmod +x src/core/*.sh
-@chmod +x src/cli/mail-guardian
-
-deb: build
-@echo "[+] Construindo pacote .deb..."
-@./scripts/build-deb.sh
+.PHONY: install uninstall clean restart status
 
 install:
-@echo "[+] Instalando Mail Guardian..."
-@sudo cp -r src/core /opt/mail-guardian/
-@sudo cp src/cli/mail-guardian /usr/local/bin/
-@sudo cp config/main.conf.example /etc/mail-guardian/main.conf
-@sudo cp systemd/mail-guardian.service /etc/systemd/system/
-@sudo systemctl daemon-reload
+    @echo "[+] Executando instalador..."
+    @bash install.sh
 
-test:
-@echo "[+] Executando testes..."
-@bash tests/test_parser.sh
+uninstall:
+    @echo "[+] Executando desinstalador..."
+    @bash uninstall.sh
 
 clean:
-@echo "[+] Limpando..."
-@rm -rf pkg_build/
-@rm -f .deb
-@find . -type f -name ".log" -delete
+    @echo "[+] Limpando arquivos temporários..."
+    @rm -rf /var/log/mail-guardian/*
+    @rm -rf /var/lib/mail-guardian/*
 
-release: clean deb
-@echo "[+] Criando release v(VERSION)"@mkdir−preleases/@cp(VERSION)"@mkdir−preleases/@cp(PKG_NAME)_$(VERSION)_all.deb releases/
-@echo "Release pronto em releases/"
+restart:
+    @echo "[+] Reiniciando serviço Mail Guardian..."
+    @systemctl restart mail-guardian
+    @systemctl status mail-guardian --no-pager
+
+status:
+    @echo "[+] Status do serviço Mail Guardian:"
+    @systemctl status mail-guardian --no-pager

@@ -1,0 +1,6 @@
+ 
+systemctl daemon-reexec
+systemctl daemon-reload
+systemctl enable mail-guardian
+systemctl start mail-guardian
+ExecStart=/opt/mail-guardian/run.sh

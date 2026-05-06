@@ -1,0 +1,65 @@
+#!/bin/bash
+
+source config/users.conf
+source config/networks.conf
+source config/policy.conf
+
+EVENTS="data/events.log"
+
+is_trusted() {
+    local ip=$1
+    for net in "${TRUSTED_NETS[@]}"; do
+        [[ "$ip" == $net* ]] && return 0
+    done
+    return 1
+}
+
+get_user_type() {
+    echo "${USER_TYPE[$1]:-human}"
+}
+
+rule_repeat_no_reply() {
+    local user=$1
+    local rcpt=$2
+
+    sent=$(grep "$user,$rcpt" "$EVENTS" | tail -n 50 | wc -l)
+    replies=$(grep "$rcpt,$user" "$EVENTS" | tail -n 50 | wc -l)
+
+    [[ $sent -gt 5 && $replies -eq 0 ]]
+}
+
+rule_many_recipients() {
+    local user=$1
+
+    uniq=$(grep "$user" "$EVENTS" | tail -n 200 | cut -d',' -f4 | sort -u | wc -l)
+
+    [[ $uniq -gt 50 ]]
+}
+
+rule_ip_multi_users() {
+    local ip=$1
+
+    users=$(grep ",$ip," "$EVENTS" | cut -d',' -f3 | sort -u | wc -l)
+
+    [[ $users -gt 5 ]]
+}
+
+evaluate() {
+    local ip=$1
+    local user=$2
+    local rcpt=$3
+
+    local score=0
+
+    type=$(get_user_type "$user")
+
+    rule_repeat_no_reply "$user" "$rcpt" && ((score+=3))
+    rule_many_recipients "$user" && ((score+=2))
+    rule_ip_multi_users "$ip" && ((score+=3))
+
+    if ! is_trusted "$ip"; then
+        ((score+=1))
+    fi
+
+    echo "$score"
+}

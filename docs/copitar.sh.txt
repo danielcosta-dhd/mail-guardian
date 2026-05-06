@@ -1,0 +1,13 @@
+copitar(){ 
+    local uso="Uso: copitar <origem> <destino>"
+    [[ -z "$1" || -z "$2" ]] && echo "$uso" && return 1
+    
+    local origem="$1"
+    local destino="$2" 
+
+    [ -d "$destino" ] || mkdir -p "$destino"
+
+    # -p preserva permissões; -S trata arquivos esparsos (otimiza espaço)
+    tar --one-file-system -cpf - "$origem" | tar -C "$destino" -xvpf -
+}
+

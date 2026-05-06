@@ -1,0 +1,17 @@
+from flask import Flask, render_template_string
+app = Flask(__name__)
+HTML = """
+<h1>Mail Guardian Dashboard</h1>
+<h2>Incidentes</h2>
+<pre>{{incidents}}</pre>
+<h2>Eventos</h2>
+<pre>{{events}}</pre>
+"""
+@app.route("/")
+def home():
+    with open("data/incidents.log") as f:
+        incidents = f.read()
+    with open("data/events.log") as f:
+        events = "".join(f.readlines()[-50:])
+    return render_template_string(HTML, incidents=incidents, events=events)
+app.run(host="0.0.0.0", port=5000)

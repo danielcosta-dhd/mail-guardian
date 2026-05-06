@@ -1,0 +1,14 @@
+#!/bin/bash
+
+LOG="/var/log/mail.log"
+OUT="data/events.log"
+
+grep "sasl_username" "$LOG" | while read line; do
+
+    ip=$(echo "$line" | grep -oP '\[[0-9.]+\]' | tr -d '[]')
+    user=$(echo "$line" | grep -oP 'sasl_username=\K[^,]+')
+    rcpt=$(echo "$line" | grep -oP 'to=<\K[^>]+' || echo "unknown")
+
+    echo "$(date +%s),$ip,$user,$rcpt" >> "$OUT"
+
+done

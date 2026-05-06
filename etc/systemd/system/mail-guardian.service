@@ -1,0 +1,14 @@
+[Unit]
+Description=Mail Guardian - Defesa Inteligente de Email
+After=network.target
+
+[Service]
+ExecStart=/opt/mail-guardian/core/run.sh
+Restart=always
+RestartSec=10
+User=root
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

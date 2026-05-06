@@ -1,0 +1,1 @@
+*/2 * * * * /caminho/mail-guardian/run.sh
